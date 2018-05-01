@@ -1,2 +1,0 @@
-# lessons
-For java training
