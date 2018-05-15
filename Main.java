@@ -10,7 +10,7 @@ public class Main {
         plane.fly();                //взлёт
     }
 }
-
+ 
 class Plane {
     private double height=-1;   //переменная высоты
     private double fuel;        //топливо
