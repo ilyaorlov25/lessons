@@ -1,0 +1,124 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class frame {
+
+	public static void main(String[] args) {
+		MySimpleGUI gui = new MySimpleGUI("Users");
+		gui.setVisible(true);
+
+	}
+
+}
+
+class MySimpleGUI extends JFrame {
+	
+	public void setPassword (String password) {
+		textPassword.setText(password);
+	}
+	public void setConfirm (String confirm) {
+		textConfirm.setText(confirm);
+	}
+	public void setName(String name) {
+		textName.setText(name);
+	}
+	public void setAge(String age) {
+		textAge.setText(age);
+	}
+	public String getName() {
+		if (textName.getText() != null) {
+			return textName.getText();
+		} else {
+			return null;
+		}
+	}
+	public String getAge() {
+		return textAge.getText();
+	}
+	private String choice;
+	public String getSex() {
+		if (maleButton.isSelected()) {
+			choice="Man";
+		} else if (femaleButton.isSelected()) {
+			choice="Woman";
+		}
+		return choice;
+	}
+	public String getPassword() {
+		return textPassword.getText();
+	}
+	public String getConfirm() {
+		return textConfirm.getText();
+	}
+	private JLabel emptyLabel = new JLabel("");
+	private JPanel panel = new JPanel();
+	private JLabel labelName = new JLabel("Name: ");
+	private JLabel labelAge = new JLabel("Age: ");
+	private JLabel labelSex = new JLabel("Sex: ");
+	private JLabel labelPassword = new JLabel("Password: ");
+	private JLabel labelConfirmPass = new JLabel("Confirm password: ");
+	private JTextField textName = new JTextField();
+	private JTextField textAge = new JTextField();
+	private JTextField textPassword = new JTextField();
+	private JTextField textConfirm = new JTextField();
+	private JButton buttonAdd = new JButton ("Add user");
+	private JButton buttonShow = new JButton ("Show users");
+	private JRadioButton maleButton = new JRadioButton("Male");
+	private JRadioButton femaleButton = new JRadioButton("Female");
+	private ButtonGroup group = new ButtonGroup();
+	
+	
+	MySimpleGUI(String title) {
+		super(title);
+		this.setBounds(50,50,350,300);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		group.add(maleButton);
+		group.add(femaleButton);
+		panel.setLayout(new GridLayout(7,2,8,16));
+		panel.add(labelName);
+		panel.add(textName);
+		panel.add(labelAge);
+		panel.add(textAge);
+		panel.add(labelSex);
+		panel.add(maleButton);
+		panel.add(emptyLabel);
+		panel.add(femaleButton);
+		panel.add(labelPassword);
+		panel.add(textPassword);
+		panel.add(labelConfirmPass);
+		panel.add(textConfirm);
+		panel.add(buttonShow);
+		panel.add(buttonAdd);
+		buttonShow.addActionListener(new ButtonEventListener(this));
+		setContentPane(panel);
+	}
+}
+
+class ButtonEventListener implements ActionListener {
+	private MySimpleGUI parentGUI;
+	ButtonEventListener(MySimpleGUI gui) {
+		parentGUI = gui;
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (parentGUI.getName().equals("") || parentGUI.getAge().equals("") || parentGUI.getSex() == null || parentGUI.getPassword().equals("") || parentGUI.getConfirm().equals("")) {
+			JOptionPane.showMessageDialog(null, 
+					"Some field is empty",
+					"ERROR",
+					JOptionPane.PLAIN_MESSAGE
+					);
+		} else if (parentGUI.getPassword().equals(parentGUI.getConfirm())){
+			JOptionPane.showMessageDialog(null, 
+					"|| Name: " + parentGUI.getName() + " || Age: " + parentGUI.getAge() + " || Sex: " + parentGUI.getSex() + " ||",
+					"INFO",
+					JOptionPane.PLAIN_MESSAGE
+					);
+			parentGUI.setName(null);
+			parentGUI.setAge(null);
+			parentGUI.setPassword(null);
+			parentGUI.setConfirm(null);
+		} else {
+			JOptionPane.showMessageDialog(null, "Password don't match", "ERROR", JOptionPane.PLAIN_MESSAGE);
+		}
+	}
+}
